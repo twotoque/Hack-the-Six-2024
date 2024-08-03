@@ -1,4 +1,6 @@
 const fs = require("fs")
+const Venue = require("../models/venue")
+const Auditorium = require("../models/auditorium")
 
 const collectVenueData = () => {
   return new Promise(function (resolve, reject) {
@@ -12,4 +14,11 @@ const collectVenueData = () => {
   })
 }
 
-module.exports = collectVenueData
+exports.collectVenueData = collectVenueData
+exports.getAllVenues = async () => {
+  return await Venue.find({})
+}
+
+exports.getAllAuditoriums = async () => {
+  return await Auditorium.find({})
+}

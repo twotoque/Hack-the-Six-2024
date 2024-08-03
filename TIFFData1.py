@@ -19,24 +19,24 @@ info = r.json()
 with_dates = []
 screening_count = 0
 
-# for idx, movie in enumerate(info['items']):
-#     if len(movie['scheduleItems']) > 0:
-#         sched_items = movie['scheduleItems']
-#         reduced_sched = []
-#         for scr in sched_items:
-#             screening = {"time": scr['startTime'], 
-#                             "pressIndustry": scr['pressAndIndustry'],
-#                             "venue": scr['venue']['shortName'],}
-#             if len(scr['cost']) > 0:
-#                 tier = scr['cost'][0]
-#                 screening['tier'] = tier
-#             reduced_sched.append(screening)
-#             screening_count += 1
-#         with_dates.append({'title': movie['title'], 'number': idx, 
-#                            'scr': reduced_sched})
-
 for idx, movie in enumerate(info['items']):
-    with_dates.append(movie)
+    if len(movie['scheduleItems']) > 0:
+        sched_items = movie['scheduleItems']
+        reduced_sched = []
+        for scr in sched_items:
+            screening = {"time": scr['startTime'], 
+                            "pressIndustry": scr['pressAndIndustry'],
+                            "venue": scr['venue']['shortName'],}
+            if len(scr['cost']) > 0:
+                tier = scr['cost'][0]
+                screening['tier'] = tier
+            reduced_sched.append(screening)
+            screening_count += 1
+        with_dates.append({'title': movie['title'], 'number': idx, 
+                           'scr': reduced_sched})
+
+# for idx, movie in enumerate(info['items']):
+#     with_dates.append(movie)
 
 def slugify(str):
     return str.lower().replace(" ", "-")

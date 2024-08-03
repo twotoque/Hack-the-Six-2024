@@ -4,19 +4,21 @@ const Schema = mongoose.Schema
 
 const screeningSchema = new mongoose.Schema({
   film: { type: Schema.Types.ObjectId, ref: "Movie" },
-  id: String,
+  event_id: { type: String, unique: true },
   startTime: String,
   endTime: String,
   ticketType: { type: String, enum: ["regular", "premium", "press"] },
-  venue: { type: Schema.Types.ObjectId, ref: "Auditorium" },
+  auditorium: { type: Schema.Types.ObjectId, ref: "Auditorium" },
   ticketsLeft: {
     type: Number,
     validate: [
       function (value) {
-        return value >= 0 && value <= this.venue.capacity
+        return value >= 0
       },
     ],
   },
 })
+
+// screeningSchema.index({ film: 1, startTime: 1, venue: 1 }, { unique: true })
 
 module.exports = mongoose.model("Screening", screeningSchema)
