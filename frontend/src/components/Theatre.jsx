@@ -2,6 +2,8 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ShowButton from "../components/Shows.jsx" 
+
 function TheatreBanner({theatre, shows}) {
     const [showContent, setShowContent] = useState(false);
 
@@ -22,7 +24,7 @@ function TheatreBanner({theatre, shows}) {
 
     {showContent && (
         <div class ="theatrepadding align-left">
-          <h1>inser lit of shows</h1>
+          <ShowButton theatre = {theatre} shows = {shows}/>
         </div>
       )}
     </div>

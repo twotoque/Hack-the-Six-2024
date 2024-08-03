@@ -12,13 +12,13 @@ function Movie() {
   const movie = {  title: "Wizard of Oz", banner: ozBanner, description: "The Wizard of Oz is a classic tale that follows a young girl named Dorothy who is swept away by a tornado to the magical land of Oz. To find her way back home to Kansas, she embarks on a journey to see the Wizard of Oz, accompanied by a scarecrow, a tin man, and a cowardly lion. Along the way, they confront various challenges and learn valuable lessons about courage, friendship, and self-discovery.", id: 11};
   const profile = { name: "John Doe", image: profileImage, id: 1234 };
   const [theatreData, setMovieData] = useState([{ name: "Scotiabank Theatre", image: scotiabankTheatre, address: "259 Richmond Street West",  id: 1 },
-  { name: "TIFF Bell Lightbox", image: scotiabankTheatre, address: "350 King Street West",  id: 2 },
-  { name: "Roy Thomson Hall", image: scotiabankTheatre, address: "60 Simcoe Street",  id: 3 },
-  { name: "Princess of Wales Theatre", image: scotiabankTheatre, address: "300 King Street West",  id: 4 },
-  { name: "Royal Alexandra Theatre", image: scotiabankTheatre, address: "260 King Street West",  id: 5 },
-  { name: "Elgin and Winter Garden Theatre Centre", image: scotiabankTheatre, address: "189 Yonge Street",  id: 6 }]);
+  { name: "TIFF Bell Lightbox", header: scotiabankTheatre, address: "350 King Street West",  id: 2 },
+  { name: "Roy Thomson Hall", header: scotiabankTheatre, address: "60 Simcoe Street",  id: 3 },
+  { name: "Princess of Wales Theatre", header: scotiabankTheatre, address: "300 King Street West",  id: 4 },
+  { name: "Royal Alexandra Theatre", header: scotiabankTheatre, address: "260 King Street West",  id: 5 },
+  { name: "Elgin and Winter Garden Theatre Centre", header: scotiabankTheatre, address: "189 Yonge Street",  id: 6 }]);
 
-  const [shows, setShows] = useState([{ time: "7:30pm - 9:40pm", theatre: 2, id: 1029}, { time: "1:30am - 9:40pm", theatre: 2, id: 52}])
+  const [shows, setShows] = useState([{ startTime: "2023-09-12 20:45:00", theatre: 2, id: 1029},{ startTime: "2023-09-12 10:45:00", theatre: 2, id: 1028}, { startTime: "2023-09-12 19:25:00", theatre: 4, id: 1030}  ])
   return (
     <div>
     <div className="relative ">
@@ -49,7 +49,7 @@ function Movie() {
             </div>
             {theatreData.map(theatre => (
               <div>
-               <TheatreBanner key={theatre.id} theatre={theatre} show = {shows} />
+               <TheatreBanner key={theatre.id} theatre={theatre} shows = {shows} />
               </div>
             ))}
 
