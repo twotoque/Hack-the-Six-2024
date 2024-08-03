@@ -7,8 +7,10 @@ function ProfileButton({profile}) {
     // profile.image 
   return (
     <>
-        <img class = "max-h-16" src= {profile.image}></img>
-        <div class="text-xl font-medium text-right ">{profile.name}</div>
+        <div class="flex items-center">
+            <img class = "max-h-12" src= {profile.image}></img>
+            <div class="text-xl font-medium text-right pl-3 ">{profile.name}</div>
+        </div>
     </>
   );
 };

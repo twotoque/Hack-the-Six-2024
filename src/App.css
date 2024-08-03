@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  padding-left: 120px;
-  padding-right: 120px;
-  padding-top: 50px;
+  padding-left: 135px;
+  padding-right: 135px;
+  padding-top: 90px;
   background-color: #FFCFBC;
 }
 .App {

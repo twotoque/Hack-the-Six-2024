@@ -6,6 +6,10 @@ module.exports = {
       maxHeight: {
         '16': '16rem', 
       },},
+      colors: {
+        'background-orange': '#fdcfbc',
+        'white' : '#FFFFFF',
+      },
   },
   plugins: [],
 }
