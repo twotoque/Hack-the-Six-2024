@@ -30,7 +30,17 @@ function Movie() {
         
         <div class="textpadding">
             <h2 class="text-left">{movie.description}</h2>
+            <div class="flex text-left pt-10 gap-2">
+
+               <h2 class="text-3xl ">Coming dates for  </h2>
+               <h2 class="text-3xl font-bold "> <button>Select date</button> </h2>
+
+
             </div>
+            </div>
+
+
+
     </div>
   );
 }
