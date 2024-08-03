@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const { auth } = require('express-oauth2-jwt-bearer');
 
 const app = express();
-const port = preocess.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const authConfig = {
-    audience: 'YOUR_API_IDENTIFIER',
-    issuerBaseURL: 'https://YOUR_AUTH0_DOMAIN/',
+    audience: 'https://tifftoker.com/login',
+    issuerBaseURL: 'dev-nr6w2ef4fy5je1rv.ca.auth0.com/',
 };
 
 mongoose.connect('mongodb://localhost:27017//users', { useNewUrlParser: true, useUnifiedTopology: true})
