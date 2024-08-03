@@ -13,7 +13,11 @@ function App() {
     { title: "test movie 1", image: badlandsImage, id: 12 },
     { title: "test movie 2", image: badlandsImage, id: 13 },
     { title: "test movie 2", image: badlandsImage, id: 14 },
-    { title: "test movie 2", image: badlandsImage, id: 15 }
+    { title: "test movie 2", image: badlandsImage, id: 15 },
+    { title: "test movie 2", image: badlandsImage, id: 16 },
+    { title: "test movie 2", image: badlandsImage, id: 17 },
+    { title: "test movie 2", image: badlandsImage, id: 18 },
+    { title: "test movie 2", image: badlandsImage, id: 19 }
   ]);
 
   const profile = { name: "John Doe", image: profileImage, id: 1234 };
@@ -41,7 +45,7 @@ function App() {
         </form>
 
         
-        <div class="flex space-x-4">
+        <div class="grid grid-cols-5 gap-4">
           {movieData.map(movie => (
             <div>
             <MovieButton key={movie.id} movie={movie} />
