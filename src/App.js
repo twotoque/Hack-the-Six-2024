@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
-import MovieButton from './components/MovieButton';
-import ProfileButton from './components/ProfileButton';
+import MovieButton from './components/MovieButton.jsx';
+import ProfileButton from './components/ProfileButton.jsx';
 import badlandsImage from './badlands.jpg';
 import profileImage from './profileImage.png';
 
