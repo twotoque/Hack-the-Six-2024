@@ -6,6 +6,7 @@ const venueSchema = new mongoose.Schema({
   name: String, // i.e. "TIFF Lightbox"
   slug: { type: String, unique: true }, // i.e. "tiff-lightbox"
   address: String, // i.e. "350 King St W, Toronto"
+  header: { type: String, default: "default-venue-header.jpeg" }, // Header image
   description: { type: String, default: "A Movie Theatre in Downtown Toronto." }, // i.e. "A good movie theatre downtown specializing in X and Y."
 })
 
