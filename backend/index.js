@@ -3,25 +3,25 @@ const express = require("express")
 
 const app = express()
 
-const authConfig = {
-  auth0Logout: true,
-  secret: "6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi",
-  issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
-  clientID: "BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp",
-  baseURL: "http://localhost:3001",
-}
+// const authConfig = {
+//   auth0Logout: true,
+//   secret: "6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi",
+//   issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
+//   clientID: "BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp",
+//   baseURL: "http://localhost:3001",
+// }
 
-// app.use(auth(authConfig))
+// // app.use(auth(authConfig))
 
-app.get("/", (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out")
-})
+// // app.get("/", (req, res) => {
+// //   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out")
+// // })
 
-const { requiresAuth } = require("express-openid-connect")
+// // const { requiresAuth } = require("express-openid-connect")
 
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user))
-})
+// // app.get("/profile", requiresAuth(), (req, res) => {
+// //   res.send(JSON.stringify(req.oidc.user))
+// // })
 
 var cors = require("cors")
 app.use(cors())
