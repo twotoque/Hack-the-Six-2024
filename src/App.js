@@ -1,22 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from 'react';
+import MovieButton from './components/MovieButton';
+import badlandsImage from './badlands.jpg';
 
 function App() {
-  const [test, setTest] = useState([
-    { title: "Get active, Toronto!", id: 12 }, 
-    { title: "c asd, 2!", id: 13 },,
-    { title: "c2 asd, 2!", id: 14 },
-  ]);
-
+  const movieData = { title: "test movie", image: badlandsImage, id: 12 };
   return (
     <div className="App">
-      <h1 class="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-      {test.map((item) => (
-        <li key={item.id}>{item.title}</li>
-      ))}
+      <MovieButton movie={movieData} />
+      <p>Is this working?</p>
     </div>
   );
 }
