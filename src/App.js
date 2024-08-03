@@ -1,5 +1,4 @@
 import logo from './logo.svg';
-import './App.css';
 import {useState} from 'react';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import MovieButton from './components/MovieButton.jsx';
