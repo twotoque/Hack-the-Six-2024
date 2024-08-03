@@ -2,14 +2,13 @@ const express = require("express")
 const mongoose = require("mongoose")
 const { auth } = require("express-oauth2-jwt-bearer")
 
-
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express()
+const port = process.env.PORT || 3000
 
 const authConfig = {
-    audience: 'https://tifftoker.com/login',
-    issuerBaseURL: 'dev-nr6w2ef4fy5je1rv.ca.auth0.com/',
-};
+  audience: "https://tifftoker.com/login",
+  issuerBaseURL: "dev-nr6w2ef4fy5je1rv.ca.auth0.com/",
+}
 
 mongoose
   .connect(
@@ -69,9 +68,9 @@ const screeningSchema = new mongoose.Schema({
 })
 
 const userSchema = new mongoose.Schema({
-    auth0id: String,
-    email: String,
-    password: String,
+  auth0id: String,
+  email: String,
+  password: String,
   schedule: [Screening],
   friends: [String], // Other users' emails?
 })
@@ -82,21 +81,31 @@ app.use(auth(authConfig))
 
 app.get("/profile", (req, res) => {
   const user = req.user
-    User.findOne({ auth0Id: user.sub }, (err, userProfile) => {
+  User.findOne({ auth0Id: user.sub }, (err, userProfile) => {
     if (err) return res.status(500).send(err)
-      if (!userProfile) {
-        // create new user profile in MongoDB
+    if (!userProfile) {
+      // create new user profile in MongoDB
       const newUser = new User({ auth0Id: user.sub, email: user.email, password: user.password })
-        newUser.save((err, savedUser) => {
+      newUser.save((err, savedUser) => {
         if (err) return res.status(500).send(err)
         res.json(savedUser)
       })
-      } else {
+    } else {
       res.json(userProfile)
-      }
+    }
   })
 })
-  
-  app.listen(port, () => {
+
+app.get("/profile/schedule", (req, res) => {
+  const user = req.user
+  User.findOne({ auth0Id: user.sub }, (err, userProfile) => {
+    if (err) return res.status(500).send(err)
+    if (!userProfile) return res.redirect("/login")
+    // Assuming at this point that we're logged in
+    return res.json(userProfile.schedule)
+  })
+})
+
+app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
