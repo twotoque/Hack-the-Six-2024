@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  padding-left: 120px;
+  padding-right: 120px;
+  padding-top: 50px;
+  background-color: #FFCFBC;
+}
 .App {
   text-align: center;
 }
