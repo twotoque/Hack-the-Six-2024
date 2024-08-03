@@ -1,23 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
+import MovieButton from './components/MovieButton';
+import badlandsImage from './badlands.jpg';
 
 function App() {
+  const movieData = { title: "test movie", image: badlandsImage, id: 12 };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MovieButton movie={movieData} />
+      <p>Is this working?</p>
     </div>
   );
 }
