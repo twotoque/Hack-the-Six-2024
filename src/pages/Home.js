@@ -22,7 +22,7 @@ function Home() {
   const profile = { name: "John Doe", image: profileImage, id: 1234 };
   
   return (
-    <div className="App">
+    <div className="App textpadding">
         <div class="flex flex-row items-start justify-between">
           <h1 className="text-7xl font-bold text-left">Tiff-Tok</h1>
         <ProfileButton key={profile.id} profile={profile} />
