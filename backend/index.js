@@ -17,6 +17,13 @@ app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
+const { requiresAuth } = require('express-openid-connect');
+
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
+
+
 // When we turn into production mode we want to restrict a few endpoints...
 const PRODUCTION = false
 
@@ -41,7 +48,7 @@ const { toBeRequired } = require("@testing-library/jest-dom/matchers.js")
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`)
