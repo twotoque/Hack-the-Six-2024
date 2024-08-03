@@ -3,6 +3,7 @@
     "name": "Scotiabank Theatre Toronto",
     "slug": "scotiabank-theatre-toronto",
     "address": "350 King Street West, Toronto",
+    "header": "scotiabank.jpg",
     "auditoriums": [
       {
         "name": "Scotiabank 9",
@@ -80,6 +81,7 @@
     "name": "TIFF Bell Lightbox",
     "slug": "tiff-bell-lightbox",
     "address": "350 King Street West, Toronto",
+    "header": "tiff-lightbox.jpg",
     "auditoriums": [
       {
         "name": "TIFF Bell Lightbox 2",
@@ -127,6 +129,7 @@
     "name": "Royal Alexandra Theatre",
     "slug": "royal-alexandra-theatre",
     "address": "350 King Street West, Toronto",
+    "header": "royal-alexandra-theatre.jpg",
     "auditoriums": [
       {
         "name": "Royal Alexandra Theatre",
@@ -139,6 +142,7 @@
     "name": "Visa Screening Room at the Princess of Wales Theatre",
     "slug": "visa-screening-room-at-the-princess-of-wales-theatre",
     "address": "350 King Street West, Toronto",
+    "header": "princess-of-wales.jpg",
     "auditoriums": [
       {
         "name": "VISA Screening Room at the Princess of Wales Theatre",
@@ -151,6 +155,7 @@
     "name": "Canadian Broadcasting Centre",
     "slug": "canadian-broadcasting-centre",
     "address": "350 King Street West, Toronto",
+    "header": "glenn-gould-studio.jpg",
     "auditoriums": [
       {
         "name": "Glenn Gould Upper Lobby",
@@ -190,6 +195,7 @@
     "name": "Festival Street Music Stage",
     "slug": "festival-street-music-stage",
     "address": "350 King Street West, Toronto",
+    "header": "festival-music-stage.jpg",
     "auditoriums": [
       {
         "name": "Festival Street Music Stage",
@@ -202,6 +208,7 @@
     "name": "Cinema Park at David Pecaut Square",
     "slug": "cinema-park-at-david-pecaut-square",
     "address": "350 King Street West, Toronto",
+    "header": "cinema-park.jpg",
     "auditoriums": [
       {
         "name": "Cinema Park at David Pecaut Square",
@@ -226,6 +233,7 @@
     "name": "Roy Thomson Hall",
     "slug": "roy-thomson-hall",
     "address": "350 King Street West, Toronto",
+    "header": "roy-thompson-hall.jpg",
     "auditoriums": [
       {
         "name": "Roy Thomson Hall",

@@ -6,35 +6,35 @@ const connect = require("../db")
 
 const router = express.Router()
 
-router.get("/test", async (req, res) => {
+var bodyParser = require("body-parser")
+var jsonParser = bodyParser.json()
+
+// Find venues given fields specified in request body (must be JSON)
+router.post("/", jsonParser, async (req, res) => {
   connect()
-  console.log("Reached venue/test - will attempt to add a sample venue")
-  let findVenue = Venue.findOne({ slug: "tiff-lightbox" }).then((result, err) => {
-    console.log("Error", err)
-    console.log("Result", result)
-    if (result) {
-      console.log("Could not add.")
-      return res.json({ message: "We found a venue with this slug already in the db. Not adding" })
-    } else {
-      const newVenue = new Venue({
-        name: "TIFF Lightbox",
-        slug: "tiff-lightbox",
-        address: "350 King St W, Toronto",
-        description:
-          "A good movie theatre downtown specializing in massively overpriced and underpriced tickets.",
-      })
-      newVenue.save()
-      console.log("Added successfully")
-      return res.json({ message: "Added theatre" })
-    }
-  })
+  var results = await Venue.find(req.body)
+  return res.json(results)
 })
 
+// Query with venue slug in the body for all the audits in that venue.
+router.post("/auditoriums", jsonParser, async (req, res) => {
+  connect()
+  if (req.body.venue) {
+    let venue = await Venue.findOne({ slug: req.body.venue })
+    let id = venue._id
+    let results = await Auditorium.find({ venue: id })
+    return res.json(results)
+  } else {
+    let results = await Auditorium.find({})
+    return res.json(results)
+  }
+})
+
+// Fills the database with the venues and auditoriums from the TIFF site. Doesn't really need to be run unless tables are dropped.
 const collectVenueData = require("./utils")
 const PRODUCTION = require("..")
-
 router.get("/add/default", async (req, res) => {
-  if (PRODUCTION) {
+  if (!PRODUCTION) {
     return res.json({ Message: "This endpoint is restricted during production." })
   }
   connect()
