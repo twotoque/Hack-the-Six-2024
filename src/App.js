@@ -7,6 +7,7 @@ import ProfileButton from './components/ProfileButton.jsx';
 import badlandsImage from './badlands.jpg';
 import profileImage from './profileImage.png';
 import Home from './pages/Home.js';
+import Movie from './pages/Movie.js';
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element ={<Home/>}/>
-          <Route path="/movie" element ={<Home/>}/>
+          <Route path="/pages/Movie" element={<Movie />} />
         </Routes>
       </Router>
     </div>
