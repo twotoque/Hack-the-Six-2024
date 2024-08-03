@@ -13,6 +13,13 @@ app.use("/user", userRoutes)
 app.use("/screening", screeningRoutes)
 app.use("/venue", venueRoutes)
 
+const all_routes = require("express-list-endpoints")
+
+app.get("/", (req, res) => {
+  console.log()
+  return res.json({ message: "Nothing to see here...", data: all_routes(app) })
+})
+
 // Body-parser middleware
 var bodyParser = require("body-parser")
 app.use(bodyParser.urlencoded({ extended: true }))
