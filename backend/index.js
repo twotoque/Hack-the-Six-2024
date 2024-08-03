@@ -1,6 +1,21 @@
+const { auth } = require("express-openid-connect")
 const express = require("express")
 
 const app = express()
+
+const authConfig = {
+  auth0Logout: true,
+  secret: '6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi',
+  issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
+  clientID: 'BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp',
+  baseURL: 'http://localhost:3000'
+}
+
+app.use(auth(authConfig))
+
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
 
 // When we turn into production mode we want to restrict a few endpoints...
 const PRODUCTION = false
@@ -22,6 +37,7 @@ app.get("/", (req, res) => {
 
 // Body-parser middleware
 var bodyParser = require("body-parser")
+const { toBeRequired } = require("@testing-library/jest-dom/matchers.js")
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
