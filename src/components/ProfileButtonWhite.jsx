@@ -9,7 +9,7 @@ function ProfileButton({profile}) {
     <>
         <div class="flex items-center">
             <img class = "max-h-12" src= {profile.image}></img>
-            <div class="text-xl font-medium text-right pl-3 ">{profile.name}</div>
+            <div class="text-xl font-medium text-right pl-3 text-white ">{profile.name}</div>
         </div>
     </>
   );

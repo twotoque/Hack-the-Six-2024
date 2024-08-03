@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import Movie from '../pages/Movie.js';
+import { Link} from 'react-router-dom';
+
 
 const inputStyle = {
   backgroundColor: '#EDECEC',
@@ -11,12 +14,14 @@ function MovieButton({movie}) {
     // movie.image 
   return (
     <>
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center">
-        <div className="">
-            <img class = "max-h-16" src= {movie.image}></img>
-            <div class="text-xl font-medium text-right ">{movie.title}</div>
-        </div>
-    </div>
+    <Link to="/pages/Movie">
+      <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center justify-center">
+          <div className="">
+              <img class = "max-h-16" src= {movie.image}></img>
+              <div class="text-xl font-medium text-center pt-3 ">{movie.title}</div>
+          </div>
+      </div>
+    </Link>
     </>
   );
 };
