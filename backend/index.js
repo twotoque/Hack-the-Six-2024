@@ -1,6 +1,18 @@
+const auth = require("express-openid-connect")
 const express = require("express")
 
 const app = express()
+
+const authConfig = {
+  audience: "https://tifftok.com/login",
+  issuerBaseURL: "dev-nr6w2ef4fy5je1rv.ca.auth0.com/",
+}
+
+router.use(auth(authConfig))
+
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
 
 // When we turn into production mode we want to restrict a few endpoints...
 const PRODUCTION = false
@@ -22,6 +34,7 @@ app.get("/", (req, res) => {
 
 // Body-parser middleware
 var bodyParser = require("body-parser")
+const { toBeRequired } = require("@testing-library/jest-dom/matchers.js")
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
