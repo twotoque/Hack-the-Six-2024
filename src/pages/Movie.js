@@ -1,15 +1,12 @@
 import logo from './logo.svg';
-import './App.css';
+import './Home.css';
 import {useState} from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import MovieButton from './components/MovieButton.jsx';
-import ProfileButton from './components/ProfileButton.jsx';
-import badlandsImage from './badlands.jpg';
-import profileImage from './profileImage.png';
-import Home from './pages/Home.js';
-import Movie from './pages/Movie.js';
+import MovieButton from '../components/MovieButton.jsx';
+import ProfileButton from '../components/ProfileButton.jsx';
+import badlandsImage from '../badlands.jpg';
+import profileImage from '../profileImage.png';
 
-function App() {
+function Movie() {
 
   
   const [movieData, setMovieData] = useState([
@@ -27,14 +24,12 @@ function App() {
   
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element ={<Home/>}/>
-          <Route path="/movie" element ={<Movie/>}/>
-        </Routes>
-      </Router>
+        <div class="flex flex-row items-start justify-between">
+          <h1 className="text-7xl font-bold text-left">MOVIE PAGE</h1>
+        <ProfileButton key={profile.id} profile={profile} />
+        </div>
     </div>
   );
 }
 
-export default App;
+export default Movie;

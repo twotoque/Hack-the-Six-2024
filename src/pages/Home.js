@@ -5,7 +5,6 @@ import MovieButton from '../components/MovieButton.jsx';
 import ProfileButton from '../components/ProfileButton.jsx';
 import badlandsImage from '../badlands.jpg';
 import profileImage from '../profileImage.png';
-
 function Home() {
 
   
