@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const movieSchema = new mongoose.Schema({
   title: String,
-  slug: String,
+  slug: { type: String, unique: true },
   runtime: Number,
   programmes: [String],
   genres: [String],

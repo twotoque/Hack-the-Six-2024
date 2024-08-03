@@ -16,7 +16,7 @@ router.get("/test", async (req, res) => {
       return res.json({ message: "We found a venue with this slug already in the db. Not adding" })
     } else {
       const newVenue = new Venue({
-        title: "TIFF Lightbox",
+        name: "TIFF Lightbox",
         slug: "tiff-lightbox",
         address: "350 King St W, Toronto",
         description:
@@ -27,6 +27,20 @@ router.get("/test", async (req, res) => {
       return res.json({ message: "Added theatre" })
     }
   })
+})
+
+const collectVenueData = require("./utils")
+
+router.get("/add/default", async (req, res) => {
+  connect()
+  venueData = await collectVenueData()
+  let venues = []
+  for (key in venueData) {
+    venues.push({ name: key, slug: venueData[key]["slug"], address: venueData[key]["address"] })
+  }
+  // let result = await Venue.insertMany(venues)
+  let result = await Venue.insertMany([venues[0]])
+  return res.json(result)
 })
 
 module.exports = router
