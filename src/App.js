@@ -15,8 +15,9 @@ function App() {
   ]);
   return (
     <div className="App">
-        <h1>Tiff-Tok</h1>
-        <div class="flex">
+        <h1 className="text-7xl font-bold text-left">Tiff-Tok</h1>
+        
+        <div class="flex space-x-4">
           {movieData.map(movie => (
             <div>
             <MovieButton key={movie.id} movie={movie} />
