@@ -18,6 +18,7 @@ function Movie() {
   { name: "Royal Alexandra Theatre", image: scotiabankTheatre, address: "260 King Street West",  id: 5 },
   { name: "Elgin and Winter Garden Theatre Centre", image: scotiabankTheatre, address: "189 Yonge Street",  id: 6 }]);
 
+  const [shows, setShows] = useState([{ time: "7:30pm - 9:40pm", theatre: 2, id: 1029}, { time: "1:30am - 9:40pm", theatre: 2, id: 52}])
   return (
     <div>
     <div className="relative ">
@@ -48,7 +49,7 @@ function Movie() {
             </div>
             {theatreData.map(theatre => (
               <div>
-               <TheatreBanner key={theatre.id} theatre={theatre} />
+               <TheatreBanner key={theatre.id} theatre={theatre} show = {shows} />
               </div>
             ))}
 
