@@ -8,10 +8,10 @@ const authConfig = {
   secret: "6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi",
   issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
   clientID: "BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp",
-  baseURL: "http://localhost:3008",
+  baseURL: "http://localhost:3001",
 }
 
-app.use(auth(authConfig))
+// app.use(auth(authConfig))
 
 app.get("/", (req, res) => {
   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out")
@@ -53,7 +53,7 @@ const { toBeRequired } = require("@testing-library/jest-dom/matchers")
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-const port = process.env.PORT || 3008
+const port = process.env.PORT || 3001
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`)
