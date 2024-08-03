@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './Home.css';
+import './Movie.css';
 import {useState} from 'react';
 import MovieButton from '../components/MovieButton.jsx';
 import ProfileButton from '../components/ProfileButton.jsx';
@@ -7,18 +7,6 @@ import badlandsImage from '../badlands.jpg';
 import profileImage from '../profileImage.png';
 
 function Movie() {
-
-  
-  const [movieData, setMovieData] = useState([
-    { title: "test movie 1", image: badlandsImage, id: 12 },
-    { title: "test movie 2", image: badlandsImage, id: 13 },
-    { title: "test movie 2", image: badlandsImage, id: 14 },
-    { title: "test movie 2", image: badlandsImage, id: 15 },
-    { title: "test movie 2", image: badlandsImage, id: 16 },
-    { title: "test movie 2", image: badlandsImage, id: 17 },
-    { title: "test movie 2", image: badlandsImage, id: 18 },
-    { title: "test movie 2", image: badlandsImage, id: 19 }
-  ]);
 
   const profile = { name: "John Doe", image: profileImage, id: 1234 };
   
