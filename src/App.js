@@ -48,7 +48,6 @@ function App() {
             </div>
           ))}
         </div>
-      <p>Is this working?</p>
     </div>
   );
 }
