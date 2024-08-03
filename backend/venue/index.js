@@ -24,6 +24,9 @@ router.post("/auditoriums", jsonParser, async (req, res) => {
     let id = venue._id
     let results = await Auditorium.find({ venue: id })
     return res.json(results)
+  } else {
+    let results = await Auditorium.find({})
+    return res.json(results)
   }
 })
 
