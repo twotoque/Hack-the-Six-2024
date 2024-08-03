@@ -9,9 +9,11 @@ const router = express.Router()
 var bodyParser = require("body-parser")
 var jsonParser = bodyParser.json()
 
+const { collectVenueData, getAllVenues } = require("./utils")
+
 router.get("/", async (req, res) => {
   await connect()
-  var results = await collectVenueData.getAllVenues()
+  var results = await getAllVenues()
   return res.json(results)
 })
 
@@ -39,7 +41,7 @@ router.post("/auditoriums", jsonParser, async (req, res) => {
 // Fills the database with the venues and auditoriums from the TIFF site. Doesn't really need to be run unless tables are dropped.
 
 const PRODUCTION = require("..")
-const { collectVenueData, getAllVenues } = require("./utils")
+
 router.get("/add/default", async (req, res) => {
   if (!PRODUCTION) {
     return res.json({ Message: "This endpoint is restricted during production." })
