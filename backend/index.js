@@ -1,14 +1,17 @@
-const auth = require("express-openid-connect")
+const { auth } = require("express-openid-connect")
 const express = require("express")
 
 const app = express()
 
 const authConfig = {
-  audience: "https://tifftok.com/login",
-  issuerBaseURL: "dev-nr6w2ef4fy5je1rv.ca.auth0.com/",
+  auth0Logout: true,
+  secret: '6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi',
+  issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
+  clientID: 'BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp',
+  baseURL: 'http://localhost:3000'
 }
 
-router.use(auth(authConfig))
+app.use(auth(authConfig))
 
 app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
