@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const { auth } = require("express-oauth2-jwt-bearer")
 const User = require("../models/user")
+const { default: connect } = require("../db")
 
 const router = express.Router()
 
@@ -13,6 +14,7 @@ const authConfig = {
 router.use(auth(authConfig))
 
 router.get("/login", (req, res) => {
+  connect()
   const user = req.user
   user.findOne({ auth0Id: user.sub }, (err, userProfile) => {
     if (err) return res.status(500).send(err)
