@@ -88,7 +88,6 @@ app.get("/", (req, res) => {
 
 // Body-parser middleware
 var bodyParser = require("body-parser")
-const { toBeRequired } = require("@testing-library/jest-dom/matchers")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

@@ -8,12 +8,10 @@ function ProfileTitle({ profile }) {
   // profile.image
   return (
     <>
-      <div class="flex flex-row pr-max items-center">
-        <Link to="../">
-          <img class="w-20 h-20 mr-10" src={backArrow}></img>
-        </Link>
-        <img class="w-20 h-20 mr-3" src={profile.image}></img>
-        <div class="text-5xl font-bold text-right pl-3 ">{profile.name}</div>
+      <div className="flex flex-row pr-max items-center">
+        <img className="w-20 h-20 mr-3" src={profile.image}></img>
+        <div className="text-5xl font-bold text-right pl-3 ">{profile.name}</div>
+        {profile.nickname}
       </div>
     </>
   )

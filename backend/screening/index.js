@@ -5,8 +5,10 @@ const Screening = require("../models/screening")
 const Movie = require("../models/movie")
 
 var bodyParser = require("body-parser")
-const connect = require("../db")
 var jsonParser = bodyParser.json()
+const connect = require("../db")
+
+router.use(bodyParser.json())
 
 router.post("/", jsonParser, async (req, res) => {
   connect()
@@ -15,7 +17,7 @@ router.post("/", jsonParser, async (req, res) => {
   return res.json(results)
 })
 
-const getAllScreenings = async (params = {}) => {
+const getAllScreenings = async (params) => {
   console.log(params)
   return await Screening.find(params)
 }

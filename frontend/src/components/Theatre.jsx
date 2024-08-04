@@ -15,8 +15,8 @@ import Wales from "../venue-images/princess-of-wales.jpg"
 import Alexandra from "../venue-images/royal-alexandra-theatre.jpg"
 import Lightbox from "../venue-images/tiff-lightbox.jpg"
 
-function TheatreBanner({ film, theatre, shows }) {
-  console.log(theatre)
+function TheatreBanner({ theatre, shows, userPicks, toggle }) {
+  // console.log(theatre)
   let imagePointer
   /// Developers note: Because we cannot dynamically access venue-images I've declared them as variables and checked theatre.name
   if (theatre.name == "Scotiabank Theatre Toronto") {
@@ -37,15 +37,15 @@ function TheatreBanner({ film, theatre, shows }) {
 
   return (
     <div className="relative text-white overflow-hidden py-2 min-h-24 rounded-lg">
-      <img class="absolute w-full z-[-1]  object-cover " src={imagePointer} />
+      <img className="absolute w-full z-[-1]  object-cover " src={imagePointer} />
       <div className="h-full flex flex-col">
         <div className="text-left pt-5 pl-4">
           <h2 className="text-3xl font-bold text-shadow ">{theatre.name}</h2>
           <p className="text-shadow">{theatre.address}</p>
         </div>
         <div className="showtimes flex justify-around flex-wrap">
-          {shows?.map((show) => (
-            <ShowTime film={film} show={show} />
+          {shows.map((show) => (
+            <ShowTime key={show.auditorium} show={show} userPicks={userPicks} toggle={toggle} />
           ))}
         </div>
       </div>

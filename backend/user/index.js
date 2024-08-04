@@ -30,18 +30,50 @@ router.get("/schedule", (req, res) => {
 })
 
 var bodyParser = require("body-parser")
+const connect = require("../db")
 var jsonParser = bodyParser.json()
 
-router.post("/initialize", async (req, res) => {
-  var management = new ManagementClient({
-    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
-    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
-    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+router.post("/initialize", jsonParser, async (req, res) => {
+  // var management = new ManagementClient({
+  //   domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+  //   clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+  //   clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+  // })
+  // let user = await management.users.update(
+  //   { id: req.body.id },
+  //   { user_metadata: { schedule: [], friends: [] } }
+  // )
+
+  connect()
+  var result = await User.insertMany([{ email: req.body.email, schedule: [], friends: [] }], {
+    ordered: false,
   })
-  let user = await management.users.update(
-    { id: req.body.id },
-    { user_metadata: { schedule: [], friends: [] } }
+  return res.json(result)
+})
+
+// Get Mongo User by their email
+router.post("/findMongo", jsonParser, async (req, res) => {
+  connect()
+  var result = await User.findOne({ email: req.body.email })
+  return res.json(result)
+})
+
+router.post("/schedule2", jsonParser, async (req, res) => {
+  connect()
+  var result = await User.findOneAndUpdate(
+    { email: req.body.email },
+    { schedule: req.body.schedule }
   )
+  return res.json(result)
+})
+
+router.post("/friends2", jsonParser, async (req, res) => {
+  connect()
+  var result = await User.findOneAndUpdate(
+    { email: req.body.email },
+    { schedule: req.body.friends }
+  )
+  return res.json(result)
 })
 
 // UPDATE the user's schedule. NOT add or delete, that has to be done on the client side. You get what you get.
@@ -58,6 +90,8 @@ router.post("/schedule", jsonParser, async (req, res) => {
     { id: req.body.id },
     { user_metadata: { schedule: req.body.schedule } }
   )
+  console.log("Post-update", user)
+  return res.json(user)
 })
 
 // UPDATE the user's friends – same situation as above.
@@ -107,17 +141,19 @@ router.post("/", jsonParser, async (req, res) => {
   if (req.body.email) {
     console.log(req.body.email)
     let result = await management.usersByEmail.getByEmail({ email: req.body.email })
+    return res.send(result.data)
   } else if (req.body.id) {
     console.log(req.body.id)
     let result = await management.users
       .get({ id: req.body.id })
       .then((r) => {
         console.log(r.data)
-        return res.send(r.data)
+        return r.data
       })
       .catch((err) => {
         console.log(err)
       })
+    return res.send(result.data)
   }
   return res.json({})
 })

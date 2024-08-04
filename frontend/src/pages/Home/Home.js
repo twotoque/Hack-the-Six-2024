@@ -29,7 +29,7 @@ function Home() {
       </div>
       <div className="overflow-scroll">
         <div className="px-8 pt-6">
-          <h3 className="text-3xl text-left pt-4">An easy way to RSVP and view movie times</h3>
+          <h3 className="text-3xl text-left pt-4">An easy way to view movie times</h3>
           <form className="max-w-md mx-auto ml-0 mt-3 mb-3">
             <label
               for="default-search"
