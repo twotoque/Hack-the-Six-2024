@@ -14,6 +14,9 @@ function Movie() {
 
   const [data, setData] = useState({})
   const [screenings, setScreenings] = useState({})
+  // const [venues, ]
+  const [screeningsByTheatre, setScreeningsByTheatre] = useState({})
+  const [theatres, setTheatres] = useState([])
 
   useEffect(() => {
     return async () => {
@@ -40,7 +43,44 @@ function Movie() {
       console.log(res.data)
       setScreenings(res.data)
     })
+    // Get all the auditoriums these screenings are in.
+    var audits = await axios.post("/venue/auditoriums").then((res) => {
+      return res.data
+    })
+    var venues = await axios.post("/venue").then((res) => {
+      return res.data
+    })
+    console.log("AUDITS", audits)
+    console.log("VENUES", venues)
+    var scrByTh = {}
+    var theatresLocal = []
+    for (const scr in screenings) {
+      for (let audit of audits) {
+        if (audit._id == scr.auditorium) {
+          for (let venue of venues) {
+            if (venue._id == audit.venue) {
+              theatresLocal.push(venue.name)
+              if (!scrByTh[venue.name]) {
+                scrByTh[venue.name] = []
+              }
+              let scr2 = scr
+              scr2.auditorium = audit.name
+              scrByTh[venue.name].push(scr2)
+            }
+          }
+        }
+      }
+    }
+    console.log(scrByTh)
+    setScreeningsByTheatre(scrByTh)
+    // theatres = [...new Set(theatres)]
+    console.log(theatresLocal)
+    setTheatres(theatresLocal)
   }
+
+  useEffect(() => {
+    console.log(theatres)
+  }, [theatres])
 
   const movie = {
     title: "Wizard of Oz",
@@ -50,45 +90,6 @@ function Movie() {
     id: 11,
   }
   const profile = { name: "John Doe", image: profileImage, id: 1234 }
-  const [theatreData, setMovieData] = useState([
-    {
-      name: "Scotiabank Theatre",
-      image: scotiabankTheatre,
-      address: "259 Richmond Street West",
-      id: 1,
-    },
-    {
-      name: "TIFF Bell Lightbox",
-      header: scotiabankTheatre,
-      address: "350 King Street West",
-      id: 2,
-    },
-    { name: "Roy Thomson Hall", header: scotiabankTheatre, address: "60 Simcoe Street", id: 3 },
-    {
-      name: "Princess of Wales Theatre",
-      header: scotiabankTheatre,
-      address: "300 King Street West",
-      id: 4,
-    },
-    {
-      name: "Royal Alexandra Theatre",
-      header: scotiabankTheatre,
-      address: "260 King Street West",
-      id: 5,
-    },
-    {
-      name: "Elgin and Winter Garden Theatre Centre",
-      header: scotiabankTheatre,
-      address: "189 Yonge Street",
-      id: 6,
-    },
-  ])
-
-  const [shows, setShows] = useState([
-    { startTime: "2023-09-12 20:45:00", theatre: 2, id: 1029 },
-    { startTime: "2023-09-12 10:45:00", theatre: 2, id: 1028 },
-    { startTime: "2023-09-12 19:25:00", theatre: 4, id: 1030 },
-  ])
 
   const parser = new DOMParser()
 
@@ -124,11 +125,14 @@ function Movie() {
           </h2>
         </div>
       </div>
-      {theatreData.map((theatre) => (
-        <div>
-          <TheatreBanner key={theatre.id} theatre={theatre} shows={screenings} />
-        </div>
-      ))}
+      {theatres}
+      {theatres.map((theatre) => {
+        return (
+          <div>
+            <TheatreBanner key={theatre.id} theatre={theatre} shows={screenings} />
+          </div>
+        )
+      })}
     </div>
   )
 }
