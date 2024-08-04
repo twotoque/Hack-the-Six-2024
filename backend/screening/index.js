@@ -8,22 +8,28 @@ var bodyParser = require("body-parser")
 const connect = require("../db")
 var jsonParser = bodyParser.json()
 
-router.get("/", jsonParser, async (req, res) => {
+router.post("/", jsonParser, async (req, res) => {
   connect()
-  var results = await Screening.find(req.body)
+  console.log(req.body)
+  var results = await getAllScreenings(req.body)
   return res.json(results)
 })
 
+const getAllScreenings = async (params = {}) => {
+  console.log(params)
+  return await Screening.find(params)
+}
+
 // TODO: Add or modify a screening. (Not essential bc this data shouldn't need to change...but would be nice)
 // Fed an object with screening fields, search by
-router.post("/", jsonParser, async (req, res) => {
-  connect()
-  // Check we have everything
-  if (req.body.slug && req.body.name && req.body.address) {
-  }
-  Screening.findOne({ slug: req.body.slug }).then((res) => console.log(res))
-  await Screening.updateOne({ slug: req.body.slug })
-})
+// router.post("/", jsonParser, async (req, res) => {
+//   connect()
+//   // Check we have everything
+//   if (req.body.slug && req.body.name && req.body.address) {
+//   }
+//   Screening.findOne({ slug: req.body.slug }).then((res) => console.log(res))
+//   await Screening.updateOne({ slug: req.body.slug })
+// })
 
 const collectScreeningData = require("./utils")
 const PRODUCTION = require("..")

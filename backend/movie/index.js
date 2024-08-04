@@ -8,7 +8,7 @@ const connect = require("../db")
 const { getAllMovies } = require("./utils")
 var jsonParser = bodyParser.json()
 
-router.get("/", jsonParser, async (req, res) => {
+router.post("/", jsonParser, async (req, res) => {
   connect()
   var results = await getAllMovies(req.body)
   return res.json(results)

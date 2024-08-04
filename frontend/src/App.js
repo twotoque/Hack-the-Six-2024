@@ -17,7 +17,7 @@ function App() {
   const profile = { name: "John Doe", image: profileImage, id: 1234 }
 
   return (
-    <div className="App">
+    <div className="App overflow-hidden h-screen">
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>

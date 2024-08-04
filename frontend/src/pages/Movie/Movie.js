@@ -1,13 +1,47 @@
 import logo from "../logo.svg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MovieButton from "../../components/MovieList/MovieButton.jsx"
 import ProfileButtonWhite from "../../components/ProfileButtonWhite.jsx"
 import profileImage from "../../profileImage.png"
 import ozBanner from "../../ozbanner.png"
 import scotiabankTheatre from "../../scotiabank.png"
 import TheatreBanner from "../../components/Theatre.jsx"
+import { useParams } from "react-router-dom"
+import axios from "axios"
 
 function Movie() {
+  const { slug } = useParams()
+
+  const [data, setData] = useState({})
+  const [screenings, setScreenings] = useState({})
+
+  useEffect(() => {
+    return async () => {
+      await axios
+        .post("/movie", { slug: slug })
+        .then((res) => {
+          console.log(res.data[0])
+          setData(res.data[0])
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (data._id) {
+      getScreenings()
+    }
+  }, [data])
+
+  const getScreenings = async () => {
+    await axios.post("/screening", { film: data._id }).then((res) => {
+      console.log(res.data)
+      setScreenings(res.data)
+    })
+  }
+
   const movie = {
     title: "Wizard of Oz",
     banner: ozBanner,
@@ -55,28 +89,36 @@ function Movie() {
     { startTime: "2023-09-12 10:45:00", theatre: 2, id: 1028 },
     { startTime: "2023-09-12 19:25:00", theatre: 4, id: 1030 },
   ])
+
+  const parser = new DOMParser()
+
   return (
     <div>
       <div className="relative ">
-        <img style={{ margin: 0, padding: 0 }} class="absolute w-full z-[-1]" src={movie.banner} />
-
-        <div class="textpadding">
-          <div class=" flex flex-row items-start justify-end">
+        <img
+          style={{ margin: 0, padding: 0 }}
+          className="absolute w-full z-[-1]"
+          src={data.header}
+        />
+        <div className="textpadding">
+          <div className=" flex flex-row items-start justify-end">
             <ProfileButtonWhite styles="text-white" key={profile.id} profile={profile} />
           </div>
-          <div class="pt-24">
-            <div class=" flex flex-row items-start justify-between">
-              <h1 className="text-7xl text-white font-bold text-left">{movie.title}</h1>
+          <div className="pt-24">
+            <div className=" flex flex-row items-start justify-between">
+              <h1 className="text-7xl text-white font-bold text-left">{data.title}</h1>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="textpadding">
-        <h2 class="text-left">{movie.description}</h2>
-        <div class="flex text-left pt-10 gap-2">
-          <h2 class="text-3xl ">Coming dates for </h2>
-          <h2 class="text-3xl font-bold ">
+      <div className="textpadding">
+        <h2 className="text-left">
+          {parser.parseFromString(data.descriptionShort, "text/html").body.firstChild.innerHTML}
+        </h2>
+        <div className="flex text-left pt-10 gap-2">
+          <h2 className="text-3xl ">Coming dates for </h2>
+          <h2 className="text-3xl font-bold ">
             {" "}
             <button>Select date</button>{" "}
           </h2>
@@ -84,7 +126,7 @@ function Movie() {
       </div>
       {theatreData.map((theatre) => (
         <div>
-          <TheatreBanner key={theatre.id} theatre={theatre} shows={shows} />
+          <TheatreBanner key={theatre.id} theatre={theatre} shows={screenings} />
         </div>
       ))}
     </div>
