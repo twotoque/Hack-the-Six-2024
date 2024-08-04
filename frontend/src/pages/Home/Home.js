@@ -1,10 +1,10 @@
-import logo from "./logo.svg"
+import logo from "../logo.svg"
 import "./Home.css"
 import { useEffect, useState } from "react"
-import MovieButton from "../components/MovieList/MovieButton.jsx"
-import ProfileButton from "../components/ProfileButton.jsx"
-import badlandsImage from "../badlands.jpg"
-import profileImage from "../profileImage.png"
+import MovieButton from "../../components/MovieList/MovieButton.jsx"
+import ProfileButton from "../../components/ProfileButton.jsx"
+import badlandsImage from "../../badlands.jpg"
+import profileImage from "../../profileImage.png"
 
 import axios from "axios"
 
