@@ -8,7 +8,7 @@ const authConfig = {
   secret: '6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi',
   issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
   clientID: 'BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp',
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3001'
 }
 
 app.use(auth(authConfig))
