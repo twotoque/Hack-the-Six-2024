@@ -3,10 +3,12 @@ import SideNav from "./SideNav"
 
 function Layout() {
   return (
-    <div className="flex flex-row">
+    <div className="relative flex flex-row w-screen h-screen overflow-hidden">
       <SideNav />
-      <div id="detail">
-        <Outlet />
+      <div id="detail" className="flex grow overflow-hidden">
+        <div className="flex justify-center px-24 overflow-hidden">
+          <Outlet />
+        </div>
       </div>
     </div>
   )

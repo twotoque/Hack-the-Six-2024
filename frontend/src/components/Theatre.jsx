@@ -2,7 +2,9 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-function TheatreBanner({theatre}) {
+import ShowButton from "../components/Shows.jsx" 
+
+function TheatreBanner({theatre, shows}) {
     const [showContent, setShowContent] = useState(false);
 
     const handleClick = () => {
@@ -21,8 +23,8 @@ function TheatreBanner({theatre}) {
         </div>
 
     {showContent && (
-        <div>
-          <h1>inser lit of shows</h1>
+        <div class ="theatrepadding align-left">
+          <ShowButton theatre = {theatre} shows = {shows}/>
         </div>
       )}
     </div>
