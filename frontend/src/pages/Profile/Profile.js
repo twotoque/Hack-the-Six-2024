@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import MovieButton from "../../components/MovieList/MovieButton.jsx"
 import ProfileTitle from "../../components/ProfileTitle.jsx"
 import ProfileButton from "../../components/ProfileButtonWhite.jsx"
-import TheatreShow from "../../components/TheatreShow.jsx"
+import ShowTime from "../../components/ShowTime.jsx"
 import ClipLoader from "react-spinners/ClipLoader.js"
 import { useAuth0 } from "@auth0/auth0-react"
 

@@ -9,22 +9,13 @@ import TheatreBanner from "../../components/Theatre.jsx"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 
-
 function Movie() {
   const { slug } = useParams()
 
   const [data, setData] = useState({})
   const [screenings, setScreenings] = useState({})
-  // const [venues, ]
   const [screeningsByTheatre, setScreeningsByTheatre] = useState({})
   const [theatres, setTheatres] = useState([])
-
-  useEffect(() => {
-    axios.post("/venue", {}).then((res) => {
-      setTheatres(res.data)
-    })
-  }, [])
-
 
   useEffect(() => {
     return async () => {
@@ -39,17 +30,18 @@ function Movie() {
         })
     }
   }, [])
-/*
+
   useEffect(() => {
     if (data._id) {
-      getScreenings()
+      getScreenings(data._id)
     }
   }, [data])
 
-  const getScreenings = async () => {
-    await axios.post("/screening", { film: data._id }).then((res) => {
-      console.log(res.data)
-      setScreenings(res.data)
+  const getScreenings = async (id) => {
+    var screenings = await axios.post("/screening", { film: id }).then((res) => {
+      console.log("SCREENINGS:", res.data)
+      return res.data
+      // setScreenings(res.data)
     })
     // Get all the auditoriums these screenings are in.
     var audits = await axios.post("/venue/auditoriums").then((res) => {
@@ -60,35 +52,44 @@ function Movie() {
     })
     console.log("AUDITS", audits)
     console.log("VENUES", venues)
+    console.log("SCREENINGS", screenings)
+
+    var result = generateLists(audits, venues, screenings)
+    // if (screeningsByTheatre == {}) setScreeningsByTheatre(result[0])
+    // theatres = [...new Set(theatres)]
+    // if (theatres == []) setTheatres(Array.from(new Set(result[1])))
+  }
+
+  const generateLists = (audits, venues, screenings) => {
+    console.log("GENERATE LISTS")
     var scrByTh = {}
     var theatresLocal = []
-    for (const scr in screenings) {
-      for (let audit of audits) {
+    for (let i = 0; i < screenings.length; i++) {
+      let scr = screenings[i]
+      console.log("SCR->", scr)
+      for (let j = 0; j < audits.length; j++) {
+        let audit = audits[j]
         if (audit._id == scr.auditorium) {
-          for (let venue of venues) {
+          for (let k = 0; k < venues.length; k++) {
+            let venue = venues[k]
             if (venue._id == audit.venue) {
-              theatresLocal.push(venue.name)
+              if (!(venue in theatresLocal)) theatresLocal.push(venue)
               if (!scrByTh[venue.name]) {
                 scrByTh[venue.name] = []
               }
-              let scr2 = scr
-              scr2.auditorium = audit.name
-              scrByTh[venue.name].push(scr2)
+              scr.auditorium = audit.name
+              scrByTh[venue.name] = [...scrByTh[venue.name], scr]
             }
           }
         }
       }
     }
-    console.log(scrByTh)
+    theatresLocal = [...new Set(theatresLocal)]
+    console.log("SCRBYTH", scrByTh)
+    console.log("theatresLocal", theatresLocal)
+    if (theatres.length == 0) setTheatres(theatresLocal)
     setScreeningsByTheatre(scrByTh)
-    // theatres = [...new Set(theatres)]
-    console.log(theatresLocal)
-    setTheatres(theatresLocal)
   }
-*/
-  useEffect(() => {
-    console.log(theatres)
-  }, [theatres])
 
   const movie = {
     title: "Wizard of Oz",
@@ -102,44 +103,36 @@ function Movie() {
   const parser = new DOMParser()
 
   return (
-    <div>
-      <div className="relative ">
+    <div className=" h-screen flex flex-col">
+      <div className="relative picture min-h-80 max-h-96 flex-grow-0 flex-shrink border-b-4 border-gray-900">
+        <h1 className="absolute bottom-2 w-full ml-8 text-7xl text-white font-bold text-left drop-shadow-lg">
+          {data.title}
+        </h1>
         <img
           style={{ margin: 0, padding: 0 }}
-          className="absolute w-full h-96 object-cover z-[-1]"
+          className="absolute w-full h-full object-cover z-[-1]"
           src={data.header}
         />
         <div className="textpadding">
-          <div className=" flex flex-row items-start justify-end">
-            <ProfileButtonWhite styles="text-white" key={profile.id} profile={profile} />
-          </div>
           <div className="pt-24">
-            <div className=" flex flex-row items-start justify-between">
-              <h1 className="text-7xl text-white font-bold text-left">{data.title}</h1>
-            </div>
+            <div className=" flex flex-row items-start justify-between"></div>
           </div>
         </div>
       </div>
-
-      <div className="textpadding">
-        <h2 className="text-left">
-          {parser.parseFromString(data.descriptionShort, "text/html").body.firstChild.innerHTML}
-        </h2>
-        <div className="flex text-left pt-10 gap-2">
-          <h2 className="text-3xl ">Coming dates for </h2>
-          <h2 className="text-3xl font-bold ">
-            {" "}
-            <button>Select date</button>{" "}
+      <div className="mt-2 the-rest overflow-scroll flex-grow flex flex-col items-center">
+        <div className="w-full pt-4 flex items-center flex-col">
+          <h2 className="max-w-2xl text-center border-b-2 border-b-gray-900 mb-2 pb-2">
+            {parser.parseFromString(data.descriptionShort, "text/html").body.firstChild.innerHTML}
           </h2>
         </div>
+        <div className="theatres w-11/12 max-w-2xl pb-8">
+          {theatres?.map((venue) => {
+            console.log("VENUE ->", venue)
+            var scrSet = screeningsByTheatre[venue.name]
+            return <TheatreBanner key={venue.id} film={data.title} theatre={venue} shows={scrSet} />
+          })}
+        </div>
       </div>
-      {theatres.map((venue) => {
-        return (
-          <div>
-            <TheatreBanner key={venue.id} theatre={venue} shows={screenings} />
-          </div>
-        )
-      })}
     </div>
   )
 }

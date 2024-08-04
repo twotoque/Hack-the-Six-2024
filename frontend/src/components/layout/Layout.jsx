@@ -5,7 +5,7 @@ function Layout() {
   return (
     <div className="relative flex flex-row w-screen">
       <SideNav />
-      <div id="detail" className="flex grow max-w-2/3">
+      <div id="detail" className="flex grow max-w-2/3 h-screen">
         <div className="flex flex-col grow justify-start">
           <Outlet />
         </div>
