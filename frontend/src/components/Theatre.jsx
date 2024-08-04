@@ -4,14 +4,8 @@ import { Link } from "react-router-dom"
 import ShowButton from "../components/Shows.jsx"
 
 function TheatreBanner({ theatre, shows }) {
-  const [showContent, setShowContent] = useState(false)
-
-  const handleClick = () => {
-    setShowContent(true)
-  }
-
   return (
-    <Link to="#" onClick={handleClick}>
+
       <div className=" relative text-white">
         <img
           style={{ margin: 0, padding: 0 }}
@@ -23,13 +17,7 @@ function TheatreBanner({ theatre, shows }) {
           <p>{theatre.address}</p>
         </div>
 
-        {showContent && (
-          <div class="theatrepadding align-left">
-            <ShowButton theatre={theatre} shows={shows} />
-          </div>
-        )}
       </div>
-    </Link>
   )
 }
 

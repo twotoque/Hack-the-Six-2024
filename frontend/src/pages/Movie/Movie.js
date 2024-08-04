@@ -19,6 +19,13 @@ function Movie() {
   const [theatres, setTheatres] = useState([])
 
   useEffect(() => {
+    axios.post("/venue", {}).then((res) => {
+      setTheatres(res.data)
+    })
+  }, [])
+
+
+  useEffect(() => {
     return async () => {
       await axios
         .post("/movie", { slug: slug })
@@ -125,11 +132,11 @@ function Movie() {
           </h2>
         </div>
       </div>
-      {theatres}
-      {theatres.map((theatre) => {
+      {theatres.map((venue) => {
+          console.log("4")
         return (
           <div>
-            <TheatreBanner key={theatre.id} theatre={theatre} shows={screenings} />
+            <TheatreBanner key={venue.id} theatre={venue} shows={screenings} />
           </div>
         )
       })}
