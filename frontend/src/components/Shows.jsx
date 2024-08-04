@@ -6,13 +6,12 @@ function ShowButton({shows, theatre}) {
 
     console.log(shows);
     console.log(theatre);
-    const showPointer = shows.find(shows => shows.theatre === theatre.id);
-    console.log(showPointer)
+    // const showPointer = shows.find(shows => shows.theatre === theatre.id);
+   //  console.log(showPointer)
 
     return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center justify-center">
-        <div className="">
-        </div>
+    <div class="bg-gray-200 rounded-lg p-4">
+        <p>Test</p>
     </div>
     );
 }

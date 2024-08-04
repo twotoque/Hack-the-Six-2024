@@ -2,6 +2,7 @@ import React from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import ShowButton from "../components/Shows.jsx"
+import ShowTime from "../components/TheatreShow.jsx"
 
 // Importing venue photos
 import CinemaPark from "../venue-images/cinema-park.jpg"
@@ -46,6 +47,8 @@ function TheatreBanner({ theatre, shows }) {
           <h2 className="text-3xl font-bold drop-shadow-2xl">{theatre.name}</h2>
           <p className="drop-shadow-2xl">{theatre.address}</p>
         </div>
+        <ShowTime></ShowTime>
+        
 
       </div>
   )
