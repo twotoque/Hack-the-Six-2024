@@ -98,7 +98,7 @@ function Movie() {
       <div className="relative ">
         <img
           style={{ margin: 0, padding: 0 }}
-          className="absolute w-full z-[-1]"
+          className="absolute w-full h-96 object-cover z-[-1]"
           src={data.header}
         />
         <div className="textpadding">
