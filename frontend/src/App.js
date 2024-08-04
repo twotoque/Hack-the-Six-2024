@@ -7,7 +7,7 @@ import badlandsImage from "./badlands.jpg"
 import profileImage from "./profileImage.png"
 import Home from "./pages/Home/Home.js"
 import Movie from "./pages/Movie/Movie.js"
-import Profile from "./pages/profile.js"
+import Profile from "./pages/Profile/Profile.js"
 import Layout from "./components/layout/Layout.jsx"
 
 import axios from "axios"
@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/event/:slug" element={<Movie />} />
-            <Route path="/pages/profile.js" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

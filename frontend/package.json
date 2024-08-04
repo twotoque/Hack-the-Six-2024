@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@google/generative-ai": "^0.16.0",
     "@heroicons/react": "^2.1.5",
     "@testing-library/jest-dom": "^5.17.0",

@@ -13,7 +13,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("/movie", {
+      .post("/movie", {
         headers: {
           "Content-Type": "application/json",
         },
