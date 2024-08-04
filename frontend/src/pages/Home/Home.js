@@ -26,13 +26,13 @@ function Home() {
   const profile = { name: "John Doe", image: profileImage, id: 1234 }
 
   return (
-    <div className="flex flex-col">
-      <div class="pt-2 flex flex-row items-start justify-between border-b-2 border-b-gray-800">
+    <div className="flex pb-8 flex-col">
+      <div class="px-8 pt-8 flex flex-row items-start justify-between border-b-2 border-b-gray-800">
         <h1 className="text-7xl font-bold text-left">Tiff-Tok</h1>
         <ProfileButton key={profile.id} profile={profile} />
       </div>
       <div className="overflow-y-scroll no-scrollbar">
-        <div class="pt-6 pb-6">
+        <div class="px-8 pt-6 pb-6">
           <h3 className="text-3xl text-left pt-4">An easy way to RSVP and view movie times</h3>
           <form class="max-w-md mx-auto ml-0 mt-3 mb-3">
             <label
@@ -76,10 +76,12 @@ function Home() {
           </form>
         </div>
 
-        <div class="grid grid-cols-3 lg:grid-cols-4 gap-4 overflow-x-visible mx-2 lg:mx-4">
-          {movieData.map((movie) => (
-            <MovieButton key={movie.id} movie={movie} />
-          ))}
+        <div class="grid grid-cols-3 lg:grid-cols-4 gap-4 overflow-x-visible mx-4 lg:mx-8">
+          {false ? (
+            <div className="min-w-full"></div>
+          ) : (
+            movieData.map((movie) => <MovieButton key={movie.id} movie={movie} />)
+          )}
         </div>
       </div>
     </div>
