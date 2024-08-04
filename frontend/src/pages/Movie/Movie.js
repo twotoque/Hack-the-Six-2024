@@ -9,6 +9,7 @@ import TheatreBanner from "../../components/Theatre.jsx"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 
+
 function Movie() {
   const { slug } = useParams()
 
@@ -38,7 +39,7 @@ function Movie() {
         })
     }
   }, [])
-
+/*
   useEffect(() => {
     if (data._id) {
       getScreenings()
@@ -84,7 +85,7 @@ function Movie() {
     console.log(theatresLocal)
     setTheatres(theatresLocal)
   }
-
+*/
   useEffect(() => {
     console.log(theatres)
   }, [theatres])
@@ -133,7 +134,6 @@ function Movie() {
         </div>
       </div>
       {theatres.map((venue) => {
-          console.log("4")
         return (
           <div>
             <TheatreBanner key={venue.id} theatre={venue} shows={screenings} />
