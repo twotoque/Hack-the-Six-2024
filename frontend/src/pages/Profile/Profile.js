@@ -11,17 +11,46 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { CalendarDaysIcon, PlusIcon } from "@heroicons/react/24/outline"
 
 import { Link, useNavigate } from "react-router-dom"
+import axios from "axios"
 
 function Profile() {
   const navigate = useNavigate()
-  const [userData, setUserData] = useState({ user_metadata: { schedule: [], friends: [] } })
+  // const [userData, setUserData] = useState({ user_metadata: { schedule: [], friends: [] } })
+  const [userData, setUserData] = useState({ schedule: [], screenings: [] })
+  const [screenings, setScreenings] = useState([])
   const { user, isLoading, isAuthenticated } = useAuth0()
 
   useEffect(() => {
     if (!user && !isLoading) {
       navigate(`/`, { replace: true }) // <-- redirect
     }
-  })
+
+    var userData = getUserData().then((res) => {
+      console.log("RES:", res.schedule)
+      setUserData({ ...userData, schedule: res.schedule })
+
+      const movies = ["The Royal Hotel", "The Boy and the Heron", "Sing Sing", "Laberint Sequences"]
+      var scrtmp = []
+      for (let i = 0; i < res.schedule.length; i++) {
+        axios.post("/screening", { _id: res.schedule[i] }).then((res) => {
+          res.data[0].auditorium = "Scotiabank " + Math.round(Math.random() * 13)
+          res.data[0].ticketType = movies[i]
+          console.log("RESULT> ", res.data[0])
+          scrtmp.push(res.data[0])
+        })
+      }
+      setScreenings(scrtmp)
+    })
+  }, [])
+
+  const getUserData = async () => {
+    var data = await axios
+      .post("/user/findMongo", { email: "will.gotlib@gmail.com" })
+      .then((res) => {
+        return res.data
+      })
+    return data
+  }
 
   const friends = [
     {
@@ -55,6 +84,10 @@ function Profile() {
     },
   ]
 
+  const dumbFunction = () => {
+    console.log(1)
+  }
+
   return (
     isAuthenticated && (
       <>
@@ -63,9 +96,12 @@ function Profile() {
           <div class="flex flex-row pt-8 h-full">
             <div class="flex flex-col w-1/2 border-r-2 border-gray-800">
               <h2 class="text-3xl pt-5 ">Upcoming shows </h2>
-              {userData.user_metadata?.schedule.map((show) => (
-                <div>{/* <TheatreShow key={show.id} show={show} /> */}</div>
-              ))}
+              <div className="text-white pt-6 flex justify-center items-center flex-col">
+                {screenings &&
+                  screenings.map((show) => (
+                    <ShowTime show={show} userPicks={userData.schedule} toggle={dumbFunction} />
+                  ))}
+              </div>
             </div>
             <div class="flex flex-col w-1/2 border-l-2 border-gray-800">
               <h2 class="text-3xl pt-5 ">Friends </h2>
