@@ -4,7 +4,18 @@ const User = require("../models/user")
 
 const router = express.Router()
 
+var bodyParser = require("body-parser")
+var jsonParser = bodyParser.json()
 
+const { ManagementClient } = require("auth0")
+
+const newManagement = () => {
+  return new ManagementClient({
+    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+  })
+}
 
 router.get("/schedule", (req, res) => {
   const user = req.user
@@ -21,18 +32,48 @@ router.get("/schedule", (req, res) => {
 var bodyParser = require("body-parser")
 var jsonParser = bodyParser.json()
 
-// TODO: Make this add a screening to a user's schedule...also make a complementary one to delete
-router.post("/schedule", jsonParser, (req, res) => {})
-router.delete("/schedule", jsonParser, (req, res) => {})
+router.post("/initialize", async (req, res) => {
+  var management = new ManagementClient({
+    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+  })
+  let user = await management.users.update(
+    { id: req.body.id },
+    { user_metadata: { schedule: [], friends: [] } }
+  )
+})
 
-// TODO: Get all this user's friends (redir to login if needed)
-router.get("/friends", (req, res) => {})
+// UPDATE the user's schedule. NOT add or delete, that has to be done on the client side. You get what you get.
+// If you want to GET the user's schedule it will have to come as part of the user object.
+router.post("/schedule", jsonParser, async (req, res) => {
+  let params = req.body
+  var management = new ManagementClient({
+    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+  })
 
-// TODO: Should we even be able to look at any other user's friends?
+  let user = await management.users.update(
+    { id: req.body.id },
+    { user_metadata: { schedule: req.body.schedule } }
+  )
+})
 
-// TODO: Add a friend, remove a friend
-router.post("/friends", (req, res) => {})
-router.delete("/friends", (req, res) => {})
+// UPDATE the user's friends – same situation as above.
+router.post("/friends", async (req, res) => {
+  let params = req.body
+  var management = new ManagementClient({
+    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+  })
+
+  let user = await management.users.update(
+    { id: req.body.id },
+    { user_metadata: { friends: req.body.friends } }
+  )
+})
 
 // Return the schedule of an arbitrary user.
 router.get("/schedule/:id", (req, res) => {
@@ -43,16 +84,42 @@ router.get("/schedule/:id", (req, res) => {
   })
 })
 
-router.get("/all", (req, res) => {
-  User.find({}, (err, users) => {
-    if (err) return res.status(500).send(err)
-    return res.json(users)
+// Find all users with the given parameters
+router.get("/all", async (req, res) => {
+  let params = req.body
+  var management = new ManagementClient({
+    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
   })
+  let result = await management.users.getAll()
+  return res.json(result)
 })
 
-router.get("/", (req, res) => {
-  console.log("Reached user/")
-  return res.json({ req: req })
+// Find user by their email
+router.post("/", jsonParser, async (req, res) => {
+  var management = new ManagementClient({
+    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
+    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+  })
+  let result = {}
+  if (req.body.email) {
+    console.log(req.body.email)
+    let result = await management.usersByEmail.getByEmail({ email: req.body.email })
+  } else if (req.body.id) {
+    console.log(req.body.id)
+    let result = await management.users
+      .get({ id: req.body.id })
+      .then((r) => {
+        console.log(r.data)
+        return res.send(r.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  return res.json({})
 })
 
 module.exports = router

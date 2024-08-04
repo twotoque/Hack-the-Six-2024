@@ -3,25 +3,65 @@ const express = require("express")
 
 const app = express()
 
+const port = process.env.PORT || 3001
+
 const authConfig = {
+  authRequired: false,
   auth0Logout: true,
-  secret: '6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi',
-  issuerBaseURL: "https://dev-0oanh27cotux4lfn.us.auth0.com",
-  clientID: 'BNuiJNoPzOg6Z0asnKphqPHQonRZ9yPp',
-  baseURL: 'http://localhost:3000'
+  secret: "6ijXxBYDhbK6m0pljN8GCbxTx2BQEtqst6XL84zkvkbnJ7h2q5Uf1RwlJJ_6AZxi",
+  baseURL: `http://localhost:${port}`,
+  clientID: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+  issuerBaseURL: "https://dev-b7whenpwkzhxw431.us.auth0.com",
 }
 
-// // app.use(auth(authConfig))
+app.use(auth(authConfig))
 
-// // app.get("/", (req, res) => {
-// //   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out")
-// // })
+app.get("/", (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out")
+})
 
-// // const { requiresAuth } = require("express-openid-connect")
+const { requiresAuth } = require("express-openid-connect")
 
-// // app.get("/profile", requiresAuth(), (req, res) => {
-// //   res.send(JSON.stringify(req.oidc.user))
-// // })
+app.get("/profile", requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user))
+})
+
+// ---------------------------------------------------------------
+// GET TOKEN FOR API CALLS (GOOD FOR 24H?)
+
+var axios = require("axios").default
+
+app.get("/client-access", async (req, res) => {
+  const axios = require("axios")
+  let data = JSON.stringify({
+    client_id: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
+    audience: "https://dev-b7whenpwkzhxw431.us.auth0.com/api/v2/",
+    scope: ["read:users"],
+  })
+
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "https://login.auth0.com/api/v2/client-grants",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    data: data,
+  }
+
+  axios
+    .request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data))
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  return res.send("em")
+})
+
+// ---------------------------------------------------------------
 
 var cors = require("cors")
 app.use(cors())
@@ -52,8 +92,6 @@ const { toBeRequired } = require("@testing-library/jest-dom/matchers")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-const port = process.env.PORT || 3001
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`)
