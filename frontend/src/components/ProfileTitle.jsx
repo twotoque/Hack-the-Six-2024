@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import backArrow from "../BackArrow.svg"
 
 
 function ProfileButton({profile}) {
@@ -8,8 +9,11 @@ function ProfileButton({profile}) {
     // profile.image 
   return (
     <>
-      <div class="flex items-center">
-          <img class = "w-24 h-24 " src= {profile.image}></img>
+      <div class="flex flex-row pr-max items-center">
+        <Link to = "../">
+            <img class = "w-20 h-20 mr-10" src= {backArrow}></img>
+          </Link>
+          <img class = "w-20 h-20 mr-3" src= {profile.image}></img>
           <div class="text-5xl font-bold text-right pl-3 ">{profile.name}</div>
       </div>
     </>
