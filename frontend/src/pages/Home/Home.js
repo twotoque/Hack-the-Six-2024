@@ -12,15 +12,9 @@ function Home() {
   const [movieData, setMovieData] = useState([])
 
   useEffect(() => {
-    axios
-      .post("/movie", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setMovieData(res.data)
-      })
+    axios.post("/movie", {}).then((res) => {
+      setMovieData(res.data)
+    })
   }, [])
 
   const profile = { name: "John Doe", image: profileImage, id: 1234 }
