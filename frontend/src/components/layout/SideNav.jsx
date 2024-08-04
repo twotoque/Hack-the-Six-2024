@@ -17,7 +17,6 @@ function SideNav() {
       <Link to="/profile">
         <UserCircleIcon className={iconParams} />
       </Link>
-      <div className="text-white">{user?.name}</div>
       {!isLoading && !user && <LoginButton className="text-white" />}
       {!isLoading && user && <LogoutButton className="text-white" />}
     </div>

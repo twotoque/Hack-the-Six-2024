@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import backArrow from "../BackArrow.svg"
 
-function ProfileButton({ profile }) {
+function ProfileTitle({ profile }) {
   // Profile object:
   // profile.name
   // profile.image
@@ -19,4 +19,4 @@ function ProfileButton({ profile }) {
   )
 }
 
-export default ProfileButton
+export default ProfileTitle

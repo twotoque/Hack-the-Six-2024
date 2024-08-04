@@ -7,6 +7,8 @@ import badlandsImage from "../../badlands.jpg"
 import profileImage from "../../profileImage.png"
 
 import axios from "axios"
+import { Auth0Context, useAuth0 } from "@auth0/auth0-react"
+import LoginButton from "../../components/layout/LoginButton.jsx"
 
 function Home() {
   const [movieData, setMovieData] = useState([])
@@ -17,15 +19,15 @@ function Home() {
     })
   }, [])
 
-  const profile = { name: "John Doe", image: profileImage, id: 1234 }
+  const { user } = useAuth0()
 
   return (
-    <div className="flex pb-8 flex-col">
-      <div className="px-8 pt-8 flex flex-row items-start justify-between border-b-2 border-b-gray-800">
+    <div className="flex h-screen flex-col">
+      <div className="px-8 pt-8 flex flex-row items-start justify-between border-b-2 border-b-gray-800 ">
         <h1 className="text-7xl font-bold text-left">Tiff-Tok</h1>
-        <ProfileButton key={profile.id} profile={profile} />
+        <h3 className="self-center">Est. 2024</h3>
       </div>
-      <div className="">
+      <div className="overflow-scroll">
         <div className="px-8 pt-6">
           <h3 className="text-3xl text-left pt-4">An easy way to RSVP and view movie times</h3>
           <form className="max-w-md mx-auto ml-0 mt-3 mb-3">
@@ -70,7 +72,7 @@ function Home() {
           </form>
         </div>
 
-        <div className="pt-8 grid grid-cols-3 lg:grid-cols-4 gap-4  px-12 lg:px-8">
+        <div className="py-8 grid grid-cols-3 lg:grid-cols-4 gap-4  px-12 lg:px-8 items-stretch">
           {false ? (
             <div className="min-w-full"></div>
           ) : (

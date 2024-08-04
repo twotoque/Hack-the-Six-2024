@@ -25,7 +25,6 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/event/:slug" element={<Movie />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/oldprofile" element={<OldProfile />} />
           </Route>
         </Routes>
       </Router>

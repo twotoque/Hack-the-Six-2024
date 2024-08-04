@@ -7,7 +7,7 @@ function ProfileButton({ profile }) {
   // profile.image
   return (
     <>
-      <Link to="./pages/profile.js">
+      <Link to="/profile">
         <div className="flex items-center">
           <img class="max-h-12" src={profile.image}></img>
           <div className="text-xl font-medium text-right pl-3 text-white ">{profile.name}</div>

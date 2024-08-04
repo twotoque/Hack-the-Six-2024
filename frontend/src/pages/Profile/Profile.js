@@ -1,35 +1,47 @@
-import React from "react"
+"use client"
+
+import { useEffect, useState } from "react"
+import MovieButton from "../../components/MovieList/MovieButton.jsx"
+import ProfileTitle from "../../components/ProfileTitle.jsx"
+import ProfileButton from "../../components/ProfileButtonWhite.jsx"
+import TheatreShow from "../../components/TheatreShow.jsx"
+import ClipLoader from "react-spinners/ClipLoader.js"
 import { useAuth0 } from "@auth0/auth0-react"
 
-const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0()
+import { useNavigate } from "react-router-dom"
 
-  if (isLoading) {
-    return <div>Loading ...</div>
-  }
+function Profile() {
+  const navigate = useNavigate()
+  const [userData, setUserData] = useState({ user_metadata: { schedule: [], friends: [] } })
+  const { user, isLoading } = useAuth0()
 
-  const addFriend = () => {}
-
-  user.app_metadata = { friends: ["1", "2"] }
+  useEffect(() => {
+    if (!user && !isLoading) {
+      navigate(`/`, { replace: true }) // <-- redirect
+    }
+  })
 
   return (
-    isAuthenticated && (
-      <div>
-        <img src={user.picture} alt={user.name} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        <p>App Metadata: {JSON.stringify(user.app_metadata)}</p>
-        <button
-          onClick={() => {
-            console.log(user.app_metadata)
-            user.app_metadata = { friends: [...user.app_metadata.friends, "extra"] }
-          }}
-        >
-          Add Friend
-        </button>
-        {user.picture}
-        <p>{user.nickname}</p>
-      </div>
+    user && (
+      <>
+        <div class="flex flex-col w-full">
+          <ProfileTitle key={user.email} profile={user} />
+          <div class="flex flex-row justify-between w-full">
+            <div class="flex flex-col">
+              <h2 class="text-3xl pt-5 ">Upcoming shows </h2>
+              {userData.user_metadata?.schedule.map((show) => (
+                <div>{/* <TheatreShow key={show.id} show={show} /> */}</div>
+              ))}
+            </div>
+            <div class="flex flex-col">
+              <h2 class="text-3xl pt-5 ">Friends </h2>
+              {userData.user_metadata?.friends.map((friends) => (
+                <div>{/* <ProfileButton key={friends.id} profile={friends} /> */}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </>
     )
   )
 }
