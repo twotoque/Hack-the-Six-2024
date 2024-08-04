@@ -5,8 +5,8 @@ function Layout() {
   return (
     <div className="relative flex flex-row w-screen h-screen overflow-hidden">
       <SideNav />
-      <div id="detail" className="flex grow overflow-hidden">
-        <div className="flex justify-center px-24 overflow-hidden">
+      <div id="detail" className="flex grow max-w-2/3 overflow-hidden">
+        <div className="flex flex-col grow justify-start overflow-hidden">
           <Outlet />
         </div>
       </div>

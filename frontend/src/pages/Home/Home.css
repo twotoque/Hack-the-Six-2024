@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 body {
-    background-color: #FFCFBC;
+  background-color: #ffcfbc;
 }
 .textpadding {
-    padding-left: 135px;
-    padding-right: 135px;
-    padding-top: 110px;
-  }
+  padding-left: 135px;
+  padding-right: 135px;
+  padding-top: 110px;
+}
 
-.theatrepadding{
+.theatrepadding {
   padding-left: 135px;
   padding-right: 135px;
 }
@@ -53,4 +53,15 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

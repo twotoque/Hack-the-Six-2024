@@ -14,7 +14,10 @@ function MovieButton({ movie }) {
   // movie.image
   return (
     <>
-      <Link to={`/event/${movie.slug}`} className="rounded-xl overflow-hidden">
+      <Link
+        to={`/event/${movie.slug}`}
+        className="rounded-xl overflow-hidden shadow-none hover:shadow-[0px_0px_10px_rgba(0,0,0,1)] hover:scale-105 hover:-translate-y-1 transition-all "
+      >
         <div className="max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center justify-center relative">
           <img class="overflow-hidden" src={movie.header}></img>
           <div class="absolute text-xl font-medium text-center pt-3 text-white text-shadow">
