@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const User = require("../models/user")
+require('dotenv').config()
+
 
 const router = express.Router()
 
@@ -11,10 +13,10 @@ const { ManagementClient } = require("auth0")
 
 const newManagement = () => {
   return new ManagementClient({
-    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
-    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
-    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
-  })
+    domain: process.env.AUTH_DOMAIN,
+    clientId: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
+  });
 }
 
 router.get("/schedule", (req, res) => {
@@ -81,9 +83,9 @@ router.post("/friends2", jsonParser, async (req, res) => {
 router.post("/schedule", jsonParser, async (req, res) => {
   let params = req.body
   var management = new ManagementClient({
-    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
-    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
-    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+    domain: process.env.AUTH_DOMAIN,
+    clientId: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
   })
 
   let user = await management.users.update(
@@ -98,9 +100,9 @@ router.post("/schedule", jsonParser, async (req, res) => {
 router.post("/friends", async (req, res) => {
   let params = req.body
   var management = new ManagementClient({
-    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
-    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
-    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+    domain: process.env.AUTH_DOMAIN,
+    clientId: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
   })
 
   let user = await management.users.update(
@@ -122,9 +124,9 @@ router.get("/schedule/:id", (req, res) => {
 router.get("/all", async (req, res) => {
   let params = req.body
   var management = new ManagementClient({
-    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
-    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
-    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+    domain: process.env.AUTH_DOMAIN,
+    clientId: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
   })
   let result = await management.users.getAll()
   return res.json(result)
@@ -133,9 +135,9 @@ router.get("/all", async (req, res) => {
 // Find user by their email
 router.post("/", jsonParser, async (req, res) => {
   var management = new ManagementClient({
-    domain: "dev-b7whenpwkzhxw431.us.auth0.com",
-    clientId: "DxSXwsY3NJASppL6NkLA2Rl9vlak8oyx",
-    clientSecret: "MgB4W_HclnCx_iKmGOYh4lDK2y1BpqX-fo2h-etvEaQZRa7JieyFHkGgUZHtrU3w",
+    domain: process.env.AUTH_DOMAIN,
+    clientId: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
   })
   let result = {}
   if (req.body.email) {
